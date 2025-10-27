@@ -46,7 +46,7 @@ def get_recommendations():
             if destination:
                 enriched_results.append({
                     'name': result['name'].title(),
-                    'score': result['score'],
+                    'score': result['normalized_score'],
                     'climate': destination['climate'].title(),
                     'region': destination['region'].title(),
                     'features': destination['special_features'],
@@ -57,7 +57,7 @@ def get_recommendations():
             else:
                 enriched_results.append({
                     'name': result['name'].title(),
-                    'score': result['score'],
+                    'score': result['normalized_score'],
                     'climate': 'Unknown',
                     'region': 'Unknown',
                     'features': [],
