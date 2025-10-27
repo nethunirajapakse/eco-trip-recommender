@@ -1,5 +1,5 @@
 import clips
-from backend.knowledge_base import knowledge_base
+from knowledge_base import knowledge_base
 
 def setup_environment():
     env = clips.Environment()

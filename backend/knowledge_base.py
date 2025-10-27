@@ -1,7 +1,3 @@
-# eco_knowledge_base.py
-# Comprehensive knowledge base for Eco-Trip Recommender 🌿
-# All data converted to lowercase for consistent matching in CLIPS
-
 knowledge_base = [
     {
         "location": "yala national park",
