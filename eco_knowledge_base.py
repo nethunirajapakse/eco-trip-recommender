@@ -1,188 +1,240 @@
 # eco_knowledge_base.py
 # Comprehensive knowledge base for Eco-Trip Recommender 🌿
-# Includes Sri Lanka's national parks with activities, climate, region, and special features
+# All data converted to lowercase for consistent matching in CLIPS
 
 knowledge_base = [
     {
-        "location": "Yala National Park",
+        "location": "yala national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "Southeast Sri Lanka",
-        "special_features": ["high leopard population", "diverse wildlife"]
+        "region": "southeast sri lanka",
+        "special_features": ["high leopard population", "diverse wildlife"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Horton Plains National Park",
+        "location": "horton plains national park",
         "activities": ["hiking", "sightseeing", "nature photography"],
         "climate": "cool highland",
-        "region": "Central Sri Lanka",
-        "special_features": ["World's End cliff", "UNESCO World Heritage Site"]
+        "region": "central sri lanka",
+        "special_features": ["world's end cliff", "unesco world heritage site"],
+        "difficulty": "moderate",
+        "popularity": "high"
     },
     {
-        "location": "Udawalawe National Park",
+        "location": "udawalawe national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "Southern Sri Lanka",
-        "special_features": ["large herds of elephants"]
+        "region": "southern sri lanka",
+        "special_features": ["large herds of elephants"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Wilpattu National Park",
+        "location": "wilpattu national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "Northwest Sri Lanka",
-        "special_features": ["unique villus", "leopards and sloth bears"]
+        "region": "northwest sri lanka",
+        "special_features": ["unique villus", "leopards and sloth bears"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Minneriya National Park",
+        "location": "minneriya national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["Gathering of elephants"]
+        "region": "north central sri lanka",
+        "special_features": ["gathering of elephants"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Kaudulla National Park",
+        "location": "kaudulla national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["elephant migration spotting"]
+        "region": "north central sri lanka",
+        "special_features": ["elephant migration spotting"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Gal Oya National Park",
+        "location": "gal oya national park",
         "activities": ["wildlife safari", "bird watching", "boat tours"],
         "climate": "dry zone",
-        "region": "Eastern Sri Lanka",
-        "special_features": ["elephants swimming between islands"]
+        "region": "eastern sri lanka",
+        "special_features": ["elephants swimming between islands"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Maduru Oya National Park",
+        "location": "maduru oya national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "Eastern Sri Lanka",
-        "special_features": ["ancient ruins", "mixed wildlife"]
+        "region": "eastern sri lanka",
+        "special_features": ["ancient ruins", "mixed wildlife"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Lunugamvehera National Park",
+        "location": "lunugamvehera national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "South Central Sri Lanka",
-        "special_features": ["elephant migration corridor"]
+        "region": "south central sri lanka",
+        "special_features": ["elephant migration corridor"],
+        "difficulty": "easy",
+        "popularity": "medium"
     },
     {
-        "location": "Kumana National Park",
+        "location": "kumana national park",
         "activities": ["bird watching", "photography", "wildlife safari"],
         "climate": "dry zone",
-        "region": "Eastern Sri Lanka",
-        "special_features": ["migratory birds", "lagoons and wetlands"]
+        "region": "eastern sri lanka",
+        "special_features": ["migratory birds", "lagoons and wetlands"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Chundikulam National Park",
+        "location": "chundikulam national park",
         "activities": ["bird watching", "nature walks"],
         "climate": "coastal",
-        "region": "Northern Sri Lanka",
-        "special_features": ["mangrove swamps", "migratory birds"]
+        "region": "northern sri lanka",
+        "special_features": ["mangrove swamps", "migratory birds"],
+        "difficulty": "easy",
+        "popularity": "medium"
     },
     {
-        "location": "Galway's Land National Park",
+        "location": "galway's land national park",
         "activities": ["bird watching", "nature walks", "photography"],
         "climate": "montane",
-        "region": "Central Sri Lanka",
-        "special_features": ["montane ecosystem"]
+        "region": "central sri lanka",
+        "special_features": ["montane ecosystem"],
+        "difficulty": "easy",
+        "popularity": "low"
     },
     {
-        "location": "Hurulu Eco Park",
+        "location": "hurulu eco park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["biosphere reserve", "Sri Lankan elephants"]
+        "region": "north central sri lanka",
+        "special_features": ["biosphere reserve", "sri lankan elephants"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Hikkaduwa National Park",
+        "location": "hikkaduwa national park",
         "activities": ["snorkeling", "diving", "marine photography"],
         "climate": "coastal",
-        "region": "Southern Sri Lanka",
-        "special_features": ["coral reefs", "marine biodiversity"]
+        "region": "southern sri lanka",
+        "special_features": ["coral reefs", "marine biodiversity"],
+        "difficulty": "moderate",
+        "popularity": "high"
     },
     {
-        "location": "Bundala National Park",
+        "location": "bundala national park",
         "activities": ["bird watching", "wildlife safari", "photography"],
         "climate": "dry zone",
-        "region": "Southern Sri Lanka",
-        "special_features": ["Ramsar Wetland", "migratory birds"]
+        "region": "southern sri lanka",
+        "special_features": ["ramsar wetland", "migratory birds"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Anawilundawa Wetland Sanctuary",
+        "location": "anawilundawa wetland sanctuary",
         "activities": ["bird watching", "nature walks", "photography"],
         "climate": "wetland",
-        "region": "Northwest Sri Lanka",
-        "special_features": ["biodiversity hotspot", "wetland ecosystem"]
+        "region": "northwest sri lanka",
+        "special_features": ["biodiversity hotspot", "wetland ecosystem"],
+        "difficulty": "easy",
+        "popularity": "medium"
     },
     {
-        "location": "Sinharaja Forest Reserve",
+        "location": "sinharaja forest reserve",
         "activities": ["hiking", "bird watching", "nature photography"],
         "climate": "rainforest",
-        "region": "Southern Sri Lanka",
-        "special_features": ["UNESCO World Heritage", "endemic species"]
+        "region": "southern sri lanka",
+        "special_features": ["unesco world heritage", "endemic species"],
+        "difficulty": "moderate",
+        "popularity": "high"
     },
     {
-        "location": "Wasgamuwa National Park",
+        "location": "wasgamuwa national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["elephants and off-the-beaten-path experience"]
+        "region": "north central sri lanka",
+        "special_features": ["elephants and off-the-beaten-path experience"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Kithulgala Forest Reserve",
+        "location": "kithulgala forest reserve",
         "activities": ["adventure sports", "hiking", "bird watching"],
         "climate": "montane",
-        "region": "Central Sri Lanka",
-        "special_features": ["adventure sports", "rich biodiversity"]
+        "region": "central sri lanka",
+        "special_features": ["adventure sports", "rich biodiversity"],
+        "difficulty": "hard",
+        "popularity": "medium"
     },
     {
-        "location": "Pigeon Island National Park",
+        "location": "pigeon island national park",
         "activities": ["snorkeling", "diving", "marine photography"],
         "climate": "coastal",
-        "region": "Eastern Sri Lanka",
-        "special_features": ["coral reefs", "marine biodiversity"]
+        "region": "eastern sri lanka",
+        "special_features": ["coral reefs", "marine biodiversity"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Minneriya-Giritale National Park",
+        "location": "minneriya-giritale national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["elephants", "bird species"]
+        "region": "north central sri lanka",
+        "special_features": ["elephants", "bird species"],
+        "difficulty": "easy",
+        "popularity": "high"
     },
     {
-        "location": "Samanalawewa National Park",
+        "location": "samanalawewa national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "wet zone",
-        "region": "Southern Sri Lanka",
-        "special_features": ["scenic beauty", "less frequented"]
+        "region": "southern sri lanka",
+        "special_features": ["scenic beauty", "less frequented"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Kakadu National Park",
+        "location": "kakadu national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "Northern Sri Lanka",
-        "special_features": ["unique ecosystems", "lesser-known park"]
+        "region": "northern sri lanka",
+        "special_features": ["unique ecosystems", "lesser-known park"],
+        "difficulty": "moderate",
+        "popularity": "low"
     },
     {
-        "location": "Kudumbigala Monastery",
+        "location": "kudumbigala monastery",
         "activities": ["cultural tourism", "hiking", "photography"],
         "climate": "dry zone",
-        "region": "Eastern Sri Lanka",
-        "special_features": ["ancient monastery", "rock formations"]
+        "region": "eastern sri lanka",
+        "special_features": ["ancient monastery", "rock formations"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
-        "location": "Namal Oya National Park",
+        "location": "namal oya national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["developing park", "natural beauty"]
+        "region": "north central sri lanka",
+        "special_features": ["developing park", "natural beauty"],
+        "difficulty": "easy",
+        "popularity": "medium"
     },
     {
-        "location": "Maha Oya National Park",
+        "location": "maha oya national park",
         "activities": ["wildlife safari", "bird watching", "photography"],
         "climate": "dry zone",
-        "region": "North Central Sri Lanka",
-        "special_features": ["new park", "wildlife observation"]
+        "region": "north central sri lanka",
+        "special_features": ["wildlife observation"],
+        "difficulty": "easy",
+        "popularity": "low"
     }
 ]
