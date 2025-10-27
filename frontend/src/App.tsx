@@ -44,7 +44,7 @@ const App = () => {
 
   const API_URL: string = 'http://localhost:5000/api';
 
-  const climates: string[] = ["any", "dry zone", "cool highland", "wet zone", "coastal"];
+  const climates: string[] = ["any", "dry zone", "cool highland", "wet zone", "coastal", "montane"];
   const regions: string[] = [
     "any", "southeast sri lanka", "central sri lanka", "southern sri lanka",
     "northwest sri lanka", "north central sri lanka", "southwest sri lanka",
