@@ -117,7 +117,7 @@ knowledge_base = [
         "popularity": "medium"
     },
     {
-        "location": "hikkaduwa national park",
+        "location": "hikkaduwa coral gardens",
         "activities": ["snorkeling", "diving", "marine photography"],
         "climate": "coastal",
         "region": "southern sri lanka",

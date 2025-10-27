@@ -44,7 +44,7 @@ const App = () => {
 
   const API_URL: string = 'http://localhost:5000/api';
 
-  const climates: string[] = ["any", "dry zone", "cool highland", "wet zone"];
+  const climates: string[] = ["any", "dry zone", "cool highland", "wet zone", "coastal"];
   const regions: string[] = [
     "any", "southeast sri lanka", "central sri lanka", "southern sri lanka",
     "northwest sri lanka", "north central sri lanka", "southwest sri lanka",
@@ -161,9 +161,9 @@ const App = () => {
   };
 
   const getScoreColor = (score: number): string => {
-    if (score >= 80) return 'bg-emerald-600';
-    if (score >= 60) return 'bg-teal-600';
-    if (score >= 40) return 'bg-cyan-600';
+    if (score >= 8) return 'bg-emerald-600';
+    if (score >= 6) return 'bg-teal-600';
+    if (score >= 4) return 'bg-cyan-600';
     return 'bg-blue-600';
   };
 
@@ -437,7 +437,7 @@ const App = () => {
                           {place.name}
                         </h3>
                         <div className={`${getScoreColor(place.score)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
-                          {place.score}
+                          {place.score} / 10
                         </div>
                       </div>
                       <div className="space-y-2 text-sm text-gray-700">
