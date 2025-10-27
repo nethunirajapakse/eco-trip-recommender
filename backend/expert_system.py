@@ -89,7 +89,6 @@ def setup_environment():
 
     return env
 
-
 def recommend(activities, climate, region, difficulty, popularity):
     env = setup_environment()
 
@@ -106,36 +105,3 @@ def recommend(activities, climate, region, difficulty, popularity):
     results.sort(key=lambda x: x['score'], reverse=True)
 
     return results
-
-
-if __name__ == "__main__":
-    print("🌿 Welcome to the Eco-Trip Expert System 🌿\n")
-
-    user_activities_input = input("Enter your preferred activities (comma separated, e.g., hiking, photography): ").lower().split(",")
-    user_activities = [a.strip() for a in user_activities_input if a.strip()]
-
-    user_climate = input("Preferred climate (dry zone, cool highland, wet zone, any): ").lower().strip()
-    if user_climate not in ["dry zone", "cool highland", "wet zone", "any"]:
-        user_climate = "any"
-
-    user_region = input("Preferred region (Southeast Sri Lanka, Central Sri Lanka, Southern Sri Lanka, Northwest Sri Lanka, North Central Sri Lanka, Southwest Sri Lanka, Eastern Sri Lanka, any): ").lower().strip()
-    if user_region not in ["southeast sri lanka", "central sri lanka", "southern sri lanka", "northwest sri lanka", "north central sri lanka", "southwest sri lanka", "eastern sri lanka", "any"]:
-        user_region = "any"
-
-    user_difficulty = input("Preferred difficulty (easy, moderate, low, any): ").lower().strip()
-    if user_difficulty not in ["easy", "moderate", "low", "any"]:
-        user_difficulty = "any"
-
-    user_popularity = input("Preferred popularity (high, medium, low, any): ").lower().strip()
-    if user_popularity not in ["high", "medium", "low", "any"]:
-        user_popularity = "any"
-
-    results = recommend(user_activities, user_climate, user_region, user_difficulty, user_popularity)
-
-    if not results:
-        print("\n😕 No matching destinations found.")
-    else:
-        print("\n✅ Inference completed. Most suitable destinations:")
-        for place in results:
-            print(f"- {place['name']} (Score: {place['score']})")
-            
