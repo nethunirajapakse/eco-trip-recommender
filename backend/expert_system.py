@@ -1,10 +1,9 @@
 import clips
-from eco_knowledge_base import knowledge_base
+from backend.knowledge_base import knowledge_base
 
 def setup_environment():
     env = clips.Environment()
 
-    # Define templates
     env.build('''
     (deftemplate user
         (multislot activities)
@@ -25,7 +24,6 @@ def setup_environment():
         (slot popularity))
     ''')
 
-    # Load the knowledge base
     for place in knowledge_base:
         fact = f'''(destination
             (name "{place['location']}")
@@ -38,14 +36,12 @@ def setup_environment():
         )'''
         env.assert_string(fact)
 
-    # Define rule for matching destinations
     env.build('''
     (deftemplate recommendation
         (slot name)
         (slot score)) ; Add a score to rank recommendations
     ''')
 
-    # Define a more complex rule to consider multiple criteria with strict filtering
     env.build('''
     (defrule recommend-complex
         ?u <- (user
@@ -97,19 +93,16 @@ def setup_environment():
 def recommend(activities, climate, region, difficulty, popularity):
     env = setup_environment()
 
-    # Assert user preferences as a single 'user' fact
     activity_str = " ".join([f'"{a}"' for a in activities]) if activities else ""
     env.assert_string(f'(user (activities {activity_str}) (preferred-climate "{climate}") (preferred-region "{region}") (preferred-difficulty "{difficulty}") (preferred-popularity "{popularity}"))')
 
     env.run()
 
-    # Collect results from 'recommendation' facts and sort by score
     results = []
     for fact in env.facts():
         if fact.template.name == 'recommendation':
             results.append({"name": fact["name"], "score": fact["score"]})
 
-    # Sort results by score in descending order
     results.sort(key=lambda x: x['score'], reverse=True)
 
     return results
@@ -118,7 +111,6 @@ def recommend(activities, climate, region, difficulty, popularity):
 if __name__ == "__main__":
     print("🌿 Welcome to the Eco-Trip Expert System 🌿\n")
 
-    # Get user input
     user_activities_input = input("Enter your preferred activities (comma separated, e.g., hiking, photography): ").lower().split(",")
     user_activities = [a.strip() for a in user_activities_input if a.strip()]
 
@@ -138,8 +130,6 @@ if __name__ == "__main__":
     if user_popularity not in ["high", "medium", "low", "any"]:
         user_popularity = "any"
 
-
-    # Run the expert system
     results = recommend(user_activities, user_climate, user_region, user_difficulty, user_popularity)
 
     if not results:

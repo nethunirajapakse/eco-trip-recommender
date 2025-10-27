@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from eco_expert_system import recommend
-from eco_knowledge_base import knowledge_base
+from backend.expert_system import recommend
+from backend.knowledge_base import knowledge_base
 
 app = Flask(__name__)
 CORS(app)  
