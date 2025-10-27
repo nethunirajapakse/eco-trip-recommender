@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mountain, Compass, Sparkles, MapPin, TrendingUp, Target, AlertCircle, CheckCircle2, Leaf, Camera, Bird, Waves, Loader2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Mountain, Compass, Sparkles, MapPin, TrendingUp, Target, AlertCircle, CheckCircle2, Leaf, Camera, Bird, X, Loader2 } from 'lucide-react';
 import './App.css'
 
 interface RecommendedPlace {
@@ -9,27 +9,38 @@ interface RecommendedPlace {
   difficulty: string;
   popularity: string;
   score: number;
-  features?: string[]; 
+  features?: string[];
 }
 
 interface ApiResponse {
   success: boolean;
-  results?: RecommendedPlace[]; 
-  error?: string; 
+  results?: RecommendedPlace[];
+  error?: string;
+}
+
+interface ActivitiesApiResponse {
+  success: boolean;
+  activities?: string[];
+  error?: string;
+  count?: number;
 }
 
 const App = () => {
-  const [activities, setActivities] = useState<string>('hiking, photography');
+  const [allAvailableActivities, setAllAvailableActivities] = useState<string[]>([]);
+  const [activitiesLoading, setActivitiesLoading] = useState<boolean>(true);
+  const [activitiesFetchError, setActivitiesFetchError] = useState<string | null>(null); 
+  const [selectedActivities, setSelectedActivities] = useState<string[]>(['hiking', 'photography']);
+  const [activityInput, setActivityInput] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [climate, setClimate] = useState<string>('any');
   const [region, setRegion] = useState<string>('any');
   const [difficulty, setDifficulty] = useState<string>('any');
   const [popularity, setPopularity] = useState<string>('any');
-  
   const [results, setResults] = useState<RecommendedPlace[] | null>(null);
-  
-  const [loading, setLoading] = useState<boolean>(false);
-  
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); 
+  const [recommendationError, setRecommendationError] = useState<string | null>(null); 
 
   const API_URL: string = 'http://localhost:5000/api';
 
@@ -37,22 +48,87 @@ const App = () => {
   const regions: string[] = [
     "any", "southeast sri lanka", "central sri lanka", "southern sri lanka",
     "northwest sri lanka", "north central sri lanka", "southwest sri lanka",
-    "eastern sri lanka"
+    "eastern sri lanka", "northern sri lanka", "south central sri lanka"
   ];
   const difficulties: string[] = ["any", "easy", "moderate", "hard"];
   const popularities: string[] = ["any", "high", "medium", "low"];
 
+  useEffect(() => {
+    const fetchActivities = async () => {
+      setActivitiesLoading(true);
+      setActivitiesFetchError(null);
+      try {
+        const response = await fetch(`${API_URL}/activities`);
+        const data: ActivitiesApiResponse = await response.json();
+
+        if (response.ok && data.success && data.activities) {
+          setAllAvailableActivities(data.activities);
+        } else {
+          setActivitiesFetchError(data.error || 'Failed to fetch available activities.');
+        }
+      } catch (err: any) {
+        setActivitiesFetchError('Unable to connect to the activities API. Make sure the Flask backend is running.');
+        console.error('Error fetching activities:', err);
+      } finally {
+        setActivitiesLoading(false);
+      }
+    };
+
+    fetchActivities();
+  }, [API_URL]); 
+
+  const handleActivityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setActivityInput(value);
+
+    const filteredSuggestions = allAvailableActivities.filter(
+      (activity) =>
+        activity.toLowerCase().includes(value.toLowerCase()) &&
+        !selectedActivities.includes(activity)
+    );
+    setSuggestions(filteredSuggestions);
+    setShowSuggestions(true);
+  };
+
+  const addActivity = (activity: string) => {
+    if (!selectedActivities.includes(activity)) {
+      setSelectedActivities([...selectedActivities, activity]);
+      setActivityInput('')
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+    inputRef.current?.focus();
+  };
+
+  const removeActivity = (activityToRemove: string) => {
+    setSelectedActivities(selectedActivities.filter(activity => activity !== activityToRemove));
+    inputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        const suggestionList = document.getElementById('activity-suggestions');
+        if (suggestionList && !suggestionList.contains(event.target as Node)) {
+          setShowSuggestions(false);
+        }
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleRecommend = async () => {
-    const activityList: string[] = activities.split(',').map(a => a.trim().toLowerCase()).filter(a => a);
-    
-    if (activityList.length === 0) {
-      setError('Please enter at least one activity');
+    if (selectedActivities.length === 0) {
+      setRecommendationError('Please select at least one activity');
       return;
     }
 
     setLoading(true);
-    setResults(null); 
-    setError(null); 
+    setResults(null);
+    setRecommendationError(null);
 
     try {
       const response = await fetch(`${API_URL}/recommend`, {
@@ -61,7 +137,7 @@ const App = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          activities: activityList,
+          activities: selectedActivities,
           climate: climate,
           region: region,
           difficulty: difficulty,
@@ -74,10 +150,10 @@ const App = () => {
       if (response.ok && data.success && data.results) {
         setResults(data.results);
       } else {
-        setError(data.error || 'Failed to get recommendations');
+        setRecommendationError(data.error || 'Failed to get recommendations');
       }
-    } catch (err: any) { 
-      setError('Unable to connect to server. Make sure the Flask API is running on port 5000.');
+    } catch (err: any) {
+      setRecommendationError('Unable to connect to the recommendation API. Make sure the Flask backend is running on port 5000.');
       console.error('Error:', err);
     } finally {
       setLoading(false);
@@ -132,20 +208,67 @@ const App = () => {
                 <h2 className="text-2xl font-bold text-gray-800">Your Preferences</h2>
               </div>
 
-              {/* Activities Input */}
-              <div className="space-y-2">
+              {/* Activities Input with Tags and Suggestions */}
+              <div className="space-y-2 relative">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                   <Camera className="w-4 h-4" />
                   Activities
+                  {activitiesLoading && <Loader2 className="w-4 h-4 animate-spin text-emerald-500" />}
                 </label>
-                <input
-                  type="text"
-                  value={activities}
-                  onChange={(e) => setActivities(e.target.value)}
-                  placeholder="e.g., hiking, photography, bird watching"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-emerald-500 focus:outline-none transition-colors"
-                />
-                <p className="text-xs text-gray-500">Comma-separated values</p>
+                {activitiesFetchError ? (
+                  <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3 text-sm text-red-700">
+                    <AlertCircle className="inline-block w-4 h-4 mr-2" />
+                    {activitiesFetchError}
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex flex-wrap gap-2 p-2 border-2 border-gray-200 rounded-lg focus-within:border-emerald-500 transition-colors bg-white min-h-[48px]">
+                      {selectedActivities.map((activity) => (
+                        <span
+                          key={activity}
+                          className="inline-flex items-center bg-emerald-100 text-emerald-800 text-sm font-medium px-2.5 py-1 rounded-full"
+                        >
+                          {activity}
+                          <button
+                            type="button"
+                            onClick={() => removeActivity(activity)}
+                            className="ml-1.5 p-0.5 rounded-full hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          >
+                            <X className="w-3 h-3 text-emerald-600" />
+                          </button>
+                        </span>
+                      ))}
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={activityInput}
+                        onChange={handleActivityInputChange}
+                        onFocus={() => {
+                            setSuggestions(allAvailableActivities.filter(act => !selectedActivities.includes(act)));
+                            setShowSuggestions(true);
+                        }}
+                        placeholder={selectedActivities.length === 0 ? "e.g., hiking, photography" : ""}
+                        className="flex-grow min-w-[150px] outline-none bg-transparent"
+                        disabled={activitiesLoading}
+                      />
+                    </div>
+
+                    {showSuggestions && suggestions.length > 0 && (
+                      <ul id="activity-suggestions" className="absolute z-10 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto mt-1">
+                        {suggestions.map((activity) => (
+                          <li
+                            key={activity}
+                            onClick={() => addActivity(activity)}
+                            className="px-4 py-2 hover:bg-emerald-50 cursor-pointer text-gray-800"
+                          >
+                            {activity.charAt(0).toUpperCase() + activity.slice(1)}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className="text-xs text-gray-500">Type to search or select from suggestions.</p>
+                  </>
+                )}
               </div>
 
               {/* Climate Selection */}
@@ -177,7 +300,7 @@ const App = () => {
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-emerald-500 focus:outline-none transition-colors bg-white"
                 >
                   {regions.map(r => (
-                    <option key={r} value={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</option>
+                    <option key={r} value={r}>{r.charAt(0).toUpperCase() + r.slice(1).replace(/_/g, ' ')}</option>
                   ))}
                 </select>
               </div>
@@ -216,13 +339,13 @@ const App = () => {
                 </select>
               </div>
 
-              {/* Error Message */}
-              {error && (
+              {/* Error Message for Recommendations */}
+              {recommendationError && (
                 <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-red-800 font-semibold">Error</p>
-                    <p className="text-red-700 text-sm">{error}</p>
+                    <p className="text-red-700 text-sm">{recommendationError}</p>
                   </div>
                 </div>
               )}
@@ -230,7 +353,7 @@ const App = () => {
               {/* Submit Button */}
               <button
                 onClick={handleRecommend}
-                disabled={loading}
+                disabled={loading || activitiesLoading}
                 className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-4 rounded-lg font-semibold text-lg hover:from-emerald-700 hover:to-teal-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {loading ? (
@@ -292,7 +415,7 @@ const App = () => {
         </div>
 
         {/* Results Section */}
-        {results !== null && ( // Only render if results is not null
+        {results !== null && (
           <div className="mt-12 bg-white rounded-2xl shadow-lg p-8">
             {results.length > 0 ? (
               <>

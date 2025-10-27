@@ -10,7 +10,7 @@ knowledge_base = [
     },
     {
         "location": "horton plains national park",
-        "activities": ["hiking", "sightseeing", "nature photography"],
+        "activities": ["hiking", "sightseeing", "photography"],
         "climate": "cool highland",
         "region": "central sri lanka",
         "special_features": ["world's end cliff", "unesco world heritage site"],
@@ -145,12 +145,21 @@ knowledge_base = [
     },
     {
         "location": "sinharaja forest reserve",
-        "activities": ["hiking", "bird watching", "nature photography"],
-        "climate": "rainforest",
+        "activities": ["hiking", "bird watching", "photography"],
+        "climate": "wet zone",
         "region": "southern sri lanka",
         "special_features": ["unesco world heritage", "endemic species"],
         "difficulty": "moderate",
         "popularity": "high"
+    },
+    {
+        "location": "kanneliya forest reserve",
+        "activities": ["hiking", "nature walks"],
+        "climate": "wet zone",
+        "region": "southern sri lanka",
+        "special_features": ["waterfalls", "dense forest"],
+        "difficulty": "moderate",
+        "popularity": "medium"
     },
     {
         "location": "wasgamuwa national park",

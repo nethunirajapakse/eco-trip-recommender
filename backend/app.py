@@ -6,6 +6,31 @@ from knowledge_base import knowledge_base
 app = Flask(__name__)
 CORS(app)  
 
+def get_all_unique_activities_from_kb():
+    activities_set = set()
+    for place in knowledge_base:
+        for activity in place.get("activities", []): 
+            activities_set.add(activity.lower())
+    return sorted(list(activities_set))
+
+@app.route('/api/activities', methods=['GET'])
+def get_activities():
+    """
+    API endpoint to get all unique activities from the knowledge base.
+    """
+    try:
+        activities = get_all_unique_activities_from_kb()
+        return jsonify({
+            'success': True,
+            'activities': activities,
+            'count': len(activities)
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/api/recommend', methods=['POST'])
 def get_recommendations():
     """
@@ -33,39 +58,39 @@ def get_recommendations():
                 'error': 'Please provide at least one activity'
             }), 400
         
-        results = recommend(activities, climate, region, difficulty, popularity)
+        raw_results = recommend(activities, climate, region, difficulty, popularity)
       
         enriched_results = []
-        for result in results:
-            destination = next(
-                (place for place in knowledge_base 
-                 if place['location'].lower() == result['name'].lower()),
-                None
-            )
-            
-            if destination:
-                enriched_results.append({
-                    'name': result['name'].title(),
-                    'score': result['normalized_score'],
-                    'climate': destination['climate'].title(),
-                    'region': destination['region'].title(),
-                    'features': destination['special_features'],
-                    'activities': destination['activities'],
-                    'difficulty': destination['difficulty'].title(),
-                    'popularity': destination['popularity'].title()
-                })
-            else:
-                enriched_results.append({
-                    'name': result['name'].title(),
-                    'score': result['normalized_score'],
-                    'climate': 'Unknown',
-                    'region': 'Unknown',
-                    'features': [],
-                    'activities': [],
-                    'difficulty': 'Unknown',
-                    'popularity': 'Unknown'
-                })
-        
+        for result in raw_results:
+            if result['normalized_score'] > 0: 
+                destination = next(
+                    (place for place in knowledge_base 
+                     if place['location'].lower() == result['name'].lower()),
+                    None
+                )
+                
+                if destination:
+                    enriched_results.append({
+                        'name': result['name'].title(),
+                        'score': result['normalized_score'],
+                        'climate': destination['climate'].title(),
+                        'region': destination['region'].title(),
+                        'features': destination['special_features'],
+                        'activities': destination['activities'],
+                        'difficulty': destination['difficulty'].title(),
+                        'popularity': destination['popularity'].title()
+                    })
+                else:
+                    enriched_results.append({
+                        'name': result['name'].title(),
+                        'score': result['normalized_score'],
+                        'climate': 'Unknown',
+                        'region': 'Unknown',
+                        'features': [],
+                        'activities': [],
+                        'difficulty': 'Unknown',
+                        'popularity': 'Unknown'
+                    })
         return jsonify({
             'success': True,
             'results': enriched_results,
