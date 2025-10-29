@@ -1,17 +1,17 @@
 # CeylonWild 🌱
 
-A lightweight, rule-based recommender system that suggests **eco-friendly destinations in Sri Lanka** based on user preferences, constraints, and activities. Built for research, prototypes, and interactive teaching in **sustainable travel** and **knowledge-based systems**.
+A rule-based, light-weight recommender system recommending **ecologically friendly Sri Lankan destinations** based on user needs, limits, and activities. Suitable for research, prototypes, and interactive pedagogy in **sustainable tourism** and **expert systems**.
 
 ---
 
-## Key Features
+## Main Features
 
-- **Rule-based destination scoring**: Uses a CLIPS expert system to match user preferences with destination attributes  
-- **Activity-focused recommendations**: Scores destinations based on how many of the user’s preferred activities are available  
-- **Flexible user preferences**: Filter by climate, region, difficulty, and popularity  
-- **Normalized scoring**: Provides both raw and normalized scores for easy comparison of options  
-- **Knowledge base driven**: Stores rich metadata for destinations including activities, climate, region, special features, difficulty, and popularity  
-- **API-ready**: Built with Flask for integration with web or mobile frontends  
-- **Dynamic enrichment**: Returns detailed information about recommended destinations including features and suitability  
+- **Rule-based destination scoring**: Uses a CLIPS expert system to convert user preferences to destination scores
+- **Activity-based recommendations**: Sorts locations based on how many of the user's preferred activities they feature
+- **Adjustable user preferences**: Sort by region, climate, difficulty, and popularity
+- **Normalised scoring**: Provides raw and normalised scores for easy comparison between options
+- **Knowledge base powered**: Caches rich metadata about places like activities, climate, region, special features, difficulty, and popularity
+- **API-ready**: Built with Flask for use with web or mobile frontends
 
 ---
+
