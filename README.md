@@ -13,5 +13,5 @@ A rule-based, light-weight recommender system recommending **ecologically friend
 - **Knowledge base powered**: Caches rich metadata about places like activities, climate, region, special features, difficulty, and popularity
 - **API-ready**: Built with Flask for use with web or mobile frontends
 
----
+
 
