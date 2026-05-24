@@ -96,10 +96,4 @@ CeylonWild separates data representation, expert inference, and user access into
 
 ---
 
-## 🤝 Contributors
 
-* **Nethuni Rajapakse** ([@nethunirajapakse](https://www.google.com/search?q=https://github.com/nethunirajapakse))
-
-```
-
-```
