@@ -1,4 +1,4 @@
-# CeylonWild 🌱
+# CeylonWild
 
 A rule-based, light-weight expert recommender system designed to suggest **ecologically friendly Sri Lankan travel destinations** tailored to user constraints, preferences, and desired activities. 
 
